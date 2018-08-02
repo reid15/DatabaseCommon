@@ -1,0 +1,6 @@
+
+*.dll
+*.pdb
+*.CopyComplete
+*.cache
+obj/Debug/DatabaseCommon.csproj.FileListAbsolute.txt
