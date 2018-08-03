@@ -10,12 +10,10 @@ namespace DatabaseCommon
     public static class DataAccess
     {
         public static DataTable GetDataTable(
-            string serverName,
-            string databaseName,
+            string connectionString,
             string sql
         )
         {
-            string connectionString = GetConnectionString(serverName, databaseName);
             var returnDataset = new DataSet();
             using (var connection = new SqlConnection(connectionString))
             {
@@ -31,7 +29,7 @@ namespace DatabaseCommon
             return returnDataset.Tables[0];
         }
 
-        private static string GetConnectionString(
+        public static string GetConnectionString(
             string serverName,
             string databaseName
         )

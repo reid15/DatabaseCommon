@@ -53,6 +53,17 @@ namespace DatabaseCommon
         }
 
         public static Table GetTable(
+            string serverName,
+            string databaseName,
+            string schemaName,
+            string tableName
+        )
+        {
+            var database = GetDatabase(serverName, databaseName);
+            return GetTable(database, schemaName, tableName);
+        }
+
+        public static Table GetTable(
             Database database,
             string schemaName,
             string tableName
@@ -64,6 +75,38 @@ namespace DatabaseCommon
                 throw new ApplicationException("Table not found");
             }
             return table;
+        }
+
+        public static string GetColumnDataType(
+            Column column
+        )
+        {
+            string returnType = "";
+            switch (column.DataType.Name)
+            {
+                case "binary":
+                case "char":
+                case "nchar":
+                case "nvarchar":
+                case "varbinary":
+                case "varchar":
+                    string length = column.DataType.MaximumLength.ToString();
+                    if (length == "-1")
+                    {
+                        length = "max";
+                    }
+                    returnType = column.DataType.Name + "(" + length + ")";
+                    break;
+                case "decimal":
+                case "numeric":
+                    returnType = column.DataType.Name + "(" + column.DataType.NumericPrecision.ToString() + "," +
+                        column.DataType.NumericScale + ")";
+                    break;
+                default:
+                    returnType = column.DataType.Name;
+                    break;
+            }
+            return returnType;
         }
 
     }
