@@ -39,11 +39,27 @@ namespace DatabaseCommon
             string databaseName
         )
         {
+            Server server = GetServer(serverName);
+            return GetDatabase(server, databaseName);
+        }
+
+        private static Server GetServer(
+            string serverName
+        )
+        {
             Server server = new Server(serverName);
             if (server == null)
             {
                 throw new ApplicationException("Server not found");
             }
+            return server;
+        }
+
+        private static Database GetDatabase(
+            Server server,
+            string databaseName
+        )
+        {
             var database = server.Databases[databaseName];
             if (database == null)
             {
@@ -107,6 +123,26 @@ namespace DatabaseCommon
                     break;
             }
             return returnType;
+        }
+
+        public static List<StoredProcedure> GetStoredProcedures(
+            string serverName,
+            string databaseName
+        )
+        {
+            var returnList = new List<StoredProcedure>();
+            Server server = GetServer(serverName);
+            server.SetDefaultInitFields(typeof(StoredProcedure), "IsSystemObject");
+            Database database = GetDatabase(server, databaseName);
+            foreach(StoredProcedure proc in database.StoredProcedures)
+            {
+                if (!proc.IsSystemObject)
+                {
+                    returnList.Add(proc);
+                }
+            }
+
+            return returnList;
         }
 
     }
