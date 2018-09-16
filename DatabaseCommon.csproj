@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataAccess.cs" />
     <Compile Include="DatabaseSchema..cs" />
+    <Compile Include="DataObject.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="ScriptData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
