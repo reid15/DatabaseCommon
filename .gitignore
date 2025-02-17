@@ -4,3 +4,4 @@
 *.CopyComplete
 *.cache
 obj/Debug/DatabaseCommon.csproj.FileListAbsolute.txt
+obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
